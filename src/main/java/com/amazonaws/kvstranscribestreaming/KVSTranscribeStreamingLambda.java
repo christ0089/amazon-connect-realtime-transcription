@@ -98,25 +98,11 @@ public class KVSTranscribeStreamingLambda implements RequestHandler<Transcriptio
         try {
             // validate the request
             request.validate();
-
-            // create a SegmentWriter to be able to save off transcription results
-            AmazonDynamoDBClientBuilder builder = AmazonDynamoDBClientBuilder.standard();
-            builder.setRegion(REGION.getName());
-            fromCustomerSegmentWriter = new TranscribedSegmentWriter(request.getConnectContactId(), new DynamoDB(builder.build()),
-                    CONSOLE_LOG_TRANSCRIPT_FLAG);
-            toCustomerSegmentWriter = new TranscribedSegmentWriter(request.getConnectContactId(), new DynamoDB(builder.build()),
-                    CONSOLE_LOG_TRANSCRIPT_FLAG);
-
-            // If an inputFileName has been provided in the request, stream audio from the file to Transcribe
-            if (request.getInputFileName() != null) {
-                startFileToTranscribeStreaming(request.getInputFileName(), request.getLanguageCode());
-            }
             // Else start streaming between KVS and Transcribe
-            else {
-                startKVSToTranscribeStreaming(request.getStreamARN(), request.getStartFragmentNum(), request.getConnectContactId(),
+            startKVSToTranscribeStreaming(request.getStreamARN(), request.getStartFragmentNum(), request.getConnectContactId(),
                         request.isTranscriptionEnabled(), request.getLanguageCode(), request.getSaveCallRecording(),
                         request.isStreamAudioFromCustomer(), request.isStreamAudioToCustomer());
-            }
+            
 
             return "{ \"result\": \"Success\" }";
 
