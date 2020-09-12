@@ -17,7 +17,7 @@ dependencies {
             'com.amazonaws:aws-java-sdk-cloudwatch:1.11.480',
             'org.slf4j:slf4j-api:1.7.24',
             'org.slf4j:slf4j-log4j12:1.7.24',
-            'com.google.cloud:google-cloud-speech:1.24.0'
+            'com.google.cloud:google-cloud-dialogflow:2.2.0'
             
             // need this for our async clients
             'software.amazon.awssdk:netty-nio-client:2.2.0',
