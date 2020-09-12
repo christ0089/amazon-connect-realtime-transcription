@@ -36,6 +36,10 @@ Metadata:
           - transcriptSegmentsTable
           - transcriptSegmentsToCustomerTable
           - contactDetailsTable
+      - Label: 
+          default: Google Speech Configuration
+          - googleApiKey
+          - googleSecretKey
     ParameterLabels:
       s3BucketName:
         default: Call Audio Bucket Name
@@ -53,6 +57,10 @@ Metadata:
         default: Existing S3 Bucket Name
       existingS3BucketName:
         default: Existing Path in the existing S3 Bucket
+      googleApiKey:
+        default: Key for Google Speech to Text Api
+      googleSecretKey:
+        default: Key for Google Speech to Text Api
 Parameters:
   s3BucketName:
     Type: String
@@ -91,6 +99,14 @@ Parameters:
     Type: String
     Default: existingS3Path/
     Description: The path to the zipped lambda files in the existingS3BucketName
+  googleApiKey:
+    Type: String
+    Default: ''
+    Description: Key for Google Speech to Text Api
+  googleSecretKey:
+    Type: String
+    Default: ''
+    Description: Key for Google Speech to Text Api
 Outputs:
   transcriptSegmentsDDBTable:
     Description:  The ARN of the DynamoDB table created to store segments of call transcripts (customer audio)
@@ -595,6 +611,8 @@ Resources:
           TABLE_CALLER_TRANSCRIPT_TO_CUSTOMER: !Ref transcriptSegmentsToCustomerTable
           RECORDINGS_PUBLIC_READ_ACL: "FALSE"
           CONSOLE_LOG_TRANSCRIPT_FLAG: "TRUE"
+          GOOGLE_SPEECH_KEY: ""
+          GOOGLE_SPEECH_SCRECRET: ""
           LOGGING_LEVEL: "FINE"
           SAVE_PARTIAL_TRANSCRIPTS: "TRUE"
           START_SELECTOR_TYPE: "NOW"
