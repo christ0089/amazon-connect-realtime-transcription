@@ -131,9 +131,11 @@ public class KVSTranscribeStreamingLambda implements RequestHandler<Transcriptio
         KVSStreamTrackObject kvsStreamTrackObjectFromCustomer = null;
         KVSStreamTrackObject kvsStreamTrackObjectToCustomer = null;
 
+        // Create Stream Tracks from the stream Name and Fragment Queue
         if (isStreamAudioFromCustomerEnabled) {
             kvsStreamTrackObjectFromCustomer = getKVSStreamTrackObject(streamName, startFragmentNum, KVSUtils.TrackName.AUDIO_FROM_CUSTOMER.getName(), contactId);
         }
+        // Create Stream Tracks from the stream Name and Fragment Queue
         if (isStreamAudioToCustomerEnabled) {
             kvsStreamTrackObjectToCustomer = getKVSStreamTrackObject(streamName, startFragmentNum, KVSUtils.TrackName.AUDIO_TO_CUSTOMER.getName(), contactId);
         }
@@ -146,11 +148,14 @@ public class KVSTranscribeStreamingLambda implements RequestHandler<Transcriptio
                 CompletableFuture<Void> fromCustomerResult = null;
                 CompletableFuture<Void> toCustomerResult = null;
 
+
+                // Handle Transcription of both Client and Customer Streams 
                 if (kvsStreamTrackObjectFromCustomer != null) {
                     fromCustomerResult = getStartStreamingTranscriptionFuture(kvsStreamTrackObjectFromCustomer,
                             languageCode, contactId, client, fromCustomerSegmentWriter, TABLE_CALLER_TRANSCRIPT, KVSUtils.TrackName.AUDIO_FROM_CUSTOMER.getName());
                 }
 
+            
                 if (kvsStreamTrackObjectToCustomer != null) {
                     toCustomerResult = getStartStreamingTranscriptionFuture(kvsStreamTrackObjectToCustomer,
                             languageCode, contactId, client, toCustomerSegmentWriter, TABLE_CALLER_TRANSCRIPT_TO_CUSTOMER, KVSUtils.TrackName.AUDIO_TO_CUSTOMER.getName());
