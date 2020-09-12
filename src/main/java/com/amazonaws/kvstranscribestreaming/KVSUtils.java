@@ -25,7 +25,13 @@ import com.amazonaws.services.kinesisvideo.model.StartSelectorType;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import com.google.cloud.speech.v1.RecognitionAudio;
+import com.google.cloud.speech.v1.RecognitionConfig;
+import com.google.cloud.speech.v1.RecognitionConfig.AudioEncoding;
+import com.google.cloud.speech.v1.RecognizeResponse;
+import com.google.cloud.speech.v1.SpeechClient;
+import com.google.cloud.speech.v1.SpeechRecognitionAlternative;
+import com.google.cloud.speech.v1.SpeechRecognitionResult;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.*;
@@ -113,6 +119,7 @@ public final class KVSUtils {
 
         return ByteBuffer.allocate(0);
     }
+
 
     /**
      * Fetches ByteBuffer of provided size from the KVS stream by repeatedly calling {@link KVSUtils#getByteBufferFromStream}
